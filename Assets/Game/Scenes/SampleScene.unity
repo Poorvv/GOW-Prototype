@@ -679,8 +679,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 809279968}
-  - component: {fileID: 809279970}
   - component: {fileID: 809279969}
+  - component: {fileID: 809279970}
+  - component: {fileID: 809279971}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -746,6 +747,18 @@ MonoBehaviour:
   playerRB: {fileID: 809279969}
   walkSpeed: 5
   sprintSpeed: 10
+--- !u!114 &809279971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809279967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fc8850cf3445f64cb143f71a7948696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &824290580
 GameObject:
   m_ObjectHideFlags: 0
