@@ -1,72 +1,3 @@
-/*using UnityEngine;
-using UnityEngine.Windows;
-
-public class PlayerController : MonoBehaviour
-{
-    PlayerInputs _playerInputs;
-    [SerializeField] Rigidbody playerRB;
-    [SerializeField] float walkSpeed;
-    [SerializeField] float sprintSpeed;
-    private Vector2 _moveInput;
-    private float currentSpeed;
-    private bool _isMovingForward;
-    private bool _isSprinting;
-    private void OnEnable()
-    {
-        _playerInputs = new PlayerInputs();
-        _playerInputs.Enable();
-        _playerInputs.Player.Move.performed += ctx => HandleMoveInput(ctx.ReadValue<Vector2>());
-        _playerInputs.Player.Move.canceled += ctx => HandleMoveCancelInput(ctx.ReadValue<Vector2>());
-        _playerInputs.Player.Sprint.performed += ctx => HandleSprintInput();
-        
-    }
-    private void OnDisable()
-    {
-        _playerInputs.Disable();
-        _playerInputs.Player.Move.performed -= ctx => HandleMoveInput(ctx.ReadValue<Vector2>());
-        _playerInputs.Player.Move.canceled -= ctx => HandleMoveCancelInput(ctx.ReadValue<Vector2>());
-        _playerInputs.Player.Sprint.performed -= ctx => HandleSprintInput();
-
-
-    }
-    private void FixedUpdate()
-    {
-        Move();
-    }
-    void Move()
-    {
-        Vector3 moveVelocity;
-        Vector3 moveDirection = transform.forward * _moveInput.y + transform.right * _moveInput.x;
-        if (_isMovingForward && _isSprinting)
-        {
-            moveVelocity = moveDirection.normalized * sprintSpeed;
-        }
-        else
-        {
-            moveVelocity = moveDirection.normalized * walkSpeed;
-        }
-        print(moveVelocity);
-        playerRB.linearVelocity = new Vector3(moveVelocity.x, playerRB.linearVelocity.y, moveVelocity.z);
-    }
-    void HandleMoveInput(Vector2 input)
-    {
-        _moveInput = input;
-        _isMovingForward = _moveInput.y > 0.71f;
-    }
-    void HandleMoveCancelInput(Vector2 input)
-    {
-        _moveInput = input;
-        _isMovingForward = false;
-        _isSprinting = false;
-    }
-    void HandleSprintInput()
-    {
-        if (_isMovingForward)
-        {
-            _isSprinting = true;
-        }
-    }
-}*/
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -75,61 +6,73 @@ using UnityEngine.EventSystems;
 public class PlayerController : MonoBehaviour
 {
     public PlayerState CurrentState { get; private set; } = PlayerState.Idle;
+
+    [SerializeField] PlayerAnimController animController;
     [SerializeField] Rigidbody playerRB;
     [SerializeField] float walkSpeed = 5f;
     [SerializeField] float sprintSpeed = 9f;
-    [SerializeField] float dodgeCooldown;
+    [SerializeField] float accelerationTime = 0.1f;
+    [SerializeField] Transform cameraRotation;
 
-
+    bool _moving;
+    private Vector3 _currentVelocity; // Required by SmoothDamp
     private PlayerInputHandler _inputHandler;
-    private float _lastDodgeTime = -999f;
     private bool _isSprinting;
+    private bool _movementRestricted = false;
 
     private void Awake()
     {
         _inputHandler = GetComponent<PlayerInputHandler>();
+        
     }
 
     private void FixedUpdate()
     {
-        Move();
-        if (_inputHandler.DodgePressed)
+        if (!_movementRestricted)
         {
-            TriggerDodge(_inputHandler.DodgeDirection);
-            _inputHandler.ResetDodge();
-        }
+            Move();
+            if (_moving) 
+            {
+                PlayerRotation();
+            }
+            
+        } 
     }
-
     private void Move()
     {
-        Vector2 _moveInput = _inputHandler.MoveInput;
-        Vector3 moveVelocity;
-        Vector3 moveDirection = transform.forward * _moveInput.y + transform.right * _moveInput.x;
-        if (_inputHandler.IsMovingForward && _inputHandler.SprintTriggered)
-        {
-            moveVelocity = moveDirection.normalized * sprintSpeed;
-        }
-        else
-        {
-            moveVelocity = moveDirection.normalized * walkSpeed;
-        }
-        playerRB.linearVelocity = new Vector3(moveVelocity.x, playerRB.linearVelocity.y, moveVelocity.z);
-    }
-    void TriggerDodge(Vector2 dir)
-    {
-        if (Time.time < _lastDodgeTime + dodgeCooldown || CurrentState == PlayerState.Dodging)
-            return;
-        print("Dodging in : " + dir);
-        //animController.TriggerDodge(dir);
-        StartCoroutine(EndDodgeAfterSeconds(0.6f)); // Match animation duration
-    }
+        Vector2 moveInput = _inputHandler.MoveInput;
+        Vector3 moveDirection = transform.forward * moveInput.y + transform.right * moveInput.x;
 
-    private IEnumerator EndDodgeAfterSeconds(float time)
+        // If no movement input, smoothly slow down to 0
+        if (moveDirection.sqrMagnitude < 0.01f)
+        {
+            Vector3 targetVelocity = new Vector3(0, playerRB.linearVelocity.y, 0);
+            playerRB.linearVelocity = Vector3.SmoothDamp(playerRB.linearVelocity, targetVelocity, ref _currentVelocity, accelerationTime);
+            animController.UpdateSprintAnim(false);
+            _moving = false;
+            animController.UpdateMoveAnim(0, 0);
+            return;
+        }
+
+        float targetSpeed = (_inputHandler.IsMovingForward && _inputHandler.SprintTriggered) ? sprintSpeed : walkSpeed;
+        Vector3 targetMoveVelocity = moveDirection.normalized * targetSpeed;
+        Vector3 desiredVelocity = new Vector3(targetMoveVelocity.x, playerRB.linearVelocity.y, targetMoveVelocity.z);
+        _moving = true;
+        playerRB.linearVelocity = Vector3.SmoothDamp(playerRB.linearVelocity, desiredVelocity, ref _currentVelocity, accelerationTime);
+
+        animController.UpdateSprintAnim(targetSpeed == sprintSpeed);
+        animController.UpdateMoveAnim(moveInput.y, moveInput.x);
+    }
+    void PlayerRotation()
     {
-        yield return new WaitForSeconds(time);
-        CurrentState = PlayerState.Idle;
+        Quaternion targetRotation = cameraRotation.rotation;
+
+        // Extract only the Y rotation
+        Vector3 euler = targetRotation.eulerAngles;
+        transform.rotation = Quaternion.Euler(0f, euler.y, 0f); // Only apply Y
     }
 }
+
 public enum PlayerState
 {
     Idle,
