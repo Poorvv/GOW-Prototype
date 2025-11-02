@@ -49,11 +49,13 @@ public class PlayerAnimController : MonoBehaviour
         if (!_isWeaponDrawn)
         {
             playerAnimator.SetTrigger("DrawWeapon");
+            playerAnimator.SetBool("isArmed", true);
             _isWeaponDrawn = true;
         }
         else
         {
             playerAnimator.SetTrigger("SheathWeapon");
+            playerAnimator.SetBool("isArmed", false);
             _isWeaponDrawn = false;
         }
     }
@@ -63,6 +65,7 @@ public class PlayerAnimController : MonoBehaviour
     }
     public void LightAttack(string _animName)
     {
+        isBusy = true;
         playerAnimator.Play(_animName);
     }
     public void ResetAttack() //TODO

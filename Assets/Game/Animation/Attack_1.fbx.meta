@@ -55,8 +55,22 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.97236896
-        functionName: ResetNewAttackWindow
+      - time: 0
+        functionName: MovementRestriction
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 9dc8c7efeb71de3458c33f15c2f1614f, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.96153843
+        functionName: MovementRestriction
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 9dc8c7efeb71de3458c33f15c2f1614f, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: OnAttackAnimationEnd
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 276bf52822119584f9298e77af368169, type: 3}
         floatParameter: 0

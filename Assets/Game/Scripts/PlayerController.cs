@@ -71,6 +71,11 @@ public class PlayerController : MonoBehaviour
         Vector3 euler = targetRotation.eulerAngles;
         transform.rotation = Quaternion.Euler(0f, euler.y, 0f); // Only apply Y
     }
+
+    public void MovementRestriction()
+    {
+        _movementRestricted = !_movementRestricted;
+    }
 }
 
 public enum PlayerState

@@ -1,89 +1,80 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] PlayerInputHandler inputHandler;
     [SerializeField] PlayerAnimController animController;
-    [SerializeField] float comboResetTime = 1f;
+    [SerializeField] WeaponEquipmentSystem weaponEquipmentSystem;
+
+    [Header("Settings")]
     [SerializeField] float inputBufferTime = 0.3f;
-    float clipLength;
-    float clipSpeed;
-    float timePassed;
+
     private int _comboIndex = 0;
-    private float _lastAttackTime;
     private bool _canAttack = true;
-    private bool _bufferedAttack;
-    private bool _reset = false;
+    private bool _bufferedAttack = false;
 
     private void OnEnable()
     {
         inputHandler.OnLightAttack += LightAttack;
     }
+
     private void OnDisable()
     {
         inputHandler.OnLightAttack -= LightAttack;
     }
-    private void Update()
-    {
-        /*if (Time.time - _lastAttackTime > comboResetTime)
-        {
-            //_comboIndex = 0; //TODO : When removed this line the second combo attack started playing.
-            _comboIndex = 0;
-            animController.ResetAttack();
-        }*/
-        timePassed = Time.deltaTime;//TODO
-        if(!(timePassed > clipLength / clipSpeed))
-        {
-            animController.ResetAttack();
 
-        }
-    }
-    void LightAttack()
+    private void LightAttack()
     {
+        // If player pressed attack before animation end, buffer it
         if (!_canAttack)
         {
             StartCoroutine(BufferNextAttack());
             return;
         }
 
-        if (_reset) 
-        {
-            _comboIndex = 0;
-            _reset = false;
-        }
-        
+        // Proceed with the next attack
         _comboIndex++;
-        _comboIndex = Mathf.Clamp(_comboIndex, 1, 3);
-        print(_comboIndex);
+        _comboIndex = Mathf.Clamp(_comboIndex, 1, 3); // 3 = total combo count
+        weaponEquipmentSystem.canChangeEquippedState = false;
         animController.LightAttack("Attack" + _comboIndex);
-        clipLength = animController.playerAnimator.GetCurrentAnimatorClipInfo(1)[0].clip.length;//TODO
-        clipSpeed = animController.playerAnimator.GetCurrentAnimatorStateInfo(1).speed;//TODO
-        _lastAttackTime = Time.deltaTime;
-        _canAttack = false;
+        print(_comboIndex);
+        _canAttack = false; // Lock further attacks until animation ends
     }
-    IEnumerator BufferNextAttack()
+
+    private IEnumerator BufferNextAttack()
     {
         _bufferedAttack = true;
         yield return new WaitForSeconds(inputBufferTime);
         _bufferedAttack = false;
     }
-    public void ResetNewAttackWindow()
+
+    // 🔥 Called by Animation Event at END of each attack animation
+    public void OnAttackAnimationEnd()
     {
         _canAttack = true;
-        if (_bufferedAttack) 
+        if (_bufferedAttack && _comboIndex < 3)
         {
+            // Continue combo if player pressed attack during animation
             _bufferedAttack = false;
+            
             LightAttack();
+
         }
-        else if(_comboIndex >= 3)
+        else
         {
+            // Reset combo instantly when animation ends and no input buffered
+            weaponEquipmentSystem.canChangeEquippedState = true;
+            animController.OnAnimationComplete();
             ResetCombo();
         }
     }
-    public void ResetCombo()
+
+    private void ResetCombo()
     {
         _comboIndex = 0;
         _canAttack = true;
+        animController.ResetAttack(); // Transitions back to movement/idle anim
     }
 }

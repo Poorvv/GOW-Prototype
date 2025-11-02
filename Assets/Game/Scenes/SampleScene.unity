@@ -845,8 +845,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputHandler: {fileID: 809279971}
   animController: {fileID: 809279975}
-  comboResetTime: 1.2
-  inputBufferTime: 0.3
+  weaponEquipmentSystem: {fileID: 809279976}
+  inputBufferTime: 0.6
 --- !u!136 &809279973
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -923,6 +923,7 @@ MonoBehaviour:
   weaponHolder: {fileID: 309455630}
   weapon: {fileID: 3796779748938834592}
   weaponSheath: {fileID: 937827795}
+  canChangeEquippedState: 1
 --- !u!1 &824290580
 GameObject:
   m_ObjectHideFlags: 0
