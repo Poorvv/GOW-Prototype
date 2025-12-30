@@ -349,12 +349,12 @@ Camera:
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10
-  m_FocalLength: 50
+  m_FocalLength: 13.858139
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
   m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
+  m_SensorSize: {x: 21.946, y: 16.002}
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -750,6 +750,8 @@ GameObject:
   - component: {fileID: 809279975}
   - component: {fileID: 809279976}
   - component: {fileID: 809279972}
+  - component: {fileID: 809279978}
+  - component: {fileID: 809279977}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -845,8 +847,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputHandler: {fileID: 809279971}
   animController: {fileID: 809279975}
+  weaponManager: {fileID: 809279978}
   weaponEquipmentSystem: {fileID: 809279976}
-  inputBufferTime: 0.6
+  inputBufferTime: 0.3
+  comboMinLimit: 1
+  comboMaxLimit: 3
 --- !u!136 &809279973
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -923,7 +928,36 @@ MonoBehaviour:
   weaponHolder: {fileID: 309455630}
   weapon: {fileID: 3796779748938834592}
   weaponSheath: {fileID: 937827795}
-  canChangeEquippedState: 1
+  CanChangeEquippedState: 1
+--- !u!114 &809279977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809279967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 858779ec9e32aef4d917c96335b55706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 809279974}
+  weaponCollider: {fileID: 8777239909253949955}
+  lightAttack: {fileID: 11400000, guid: 4232ec95193b0ea44bbe5c781f9879b6, type: 2}
+  heavyAttack: {fileID: 11400000, guid: 8cf3dc5cd3ed0634f9e22b82f17e829e, type: 2}
+--- !u!114 &809279978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809279967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57a26ef97c7be6a4a923517704b9a809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeaponScript: {fileID: 809279977}
 --- !u!1 &824290580
 GameObject:
   m_ObjectHideFlags: 0
@@ -2708,6 +2742,7 @@ GameObject:
   - component: {fileID: 3381962252945261394}
   - component: {fileID: 8777239909253949954}
   - component: {fileID: 2722498500224252742}
+  - component: {fileID: 8777239909253949955}
   m_Layer: 0
   m_Name: AXE
   m_TagString: Untagged
@@ -3738,6 +3773,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3796779748938834592}
   m_Mesh: {fileID: 4208568555960729752, guid: 6c92b91101bab0e45aa38b9637ace133, type: 3}
+--- !u!65 &8777239909253949955
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3796779748938834592}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.25812507, y: 0.44070858, z: 0.05322847}
+  m_Center: {x: -0.06552445, y: 0.7238726, z: 0.000001029469}
 --- !u!1 &8792215779664955385
 GameObject:
   m_ObjectHideFlags: 0

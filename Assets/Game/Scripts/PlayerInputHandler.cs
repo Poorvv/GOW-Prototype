@@ -9,6 +9,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     public event Action OnWeaponDrawn; // event for draw
     public event Action OnLightAttack;
+    public event Action OnHeavyAttack;
     //public event Action OnWeaponSheathed; // optional if you want toggling
 
     private void OnEnable()
@@ -20,7 +21,8 @@ public class PlayerInputHandler : MonoBehaviour
         _playerInputs.Player.Move.canceled += ctx => HandleMoveCancel();
         _playerInputs.Player.Sprint.performed += ctx => HandleSprintInput();
         _playerInputs.Player.DrawWeapon.performed += ctx => HandleDrawWeaponInput();
-        _playerInputs.Player.Attack.performed += ctx => HandleLightAttack();
+        _playerInputs.Player.LightAttack.performed += ctx => HandleLightAttack();
+        _playerInputs.Player.HeavyAttack.performed += ctx => HandleHeavyAttack();
     }
 
     private void OnDisable()
@@ -31,7 +33,8 @@ public class PlayerInputHandler : MonoBehaviour
         _playerInputs.Player.Move.canceled -= ctx => HandleMoveCancel();
         _playerInputs.Player.Sprint.performed -= ctx => HandleSprintInput();
         _playerInputs.Player.DrawWeapon.performed -= ctx => HandleDrawWeaponInput();
-        _playerInputs.Player.Attack.performed -= ctx => HandleLightAttack();
+        _playerInputs.Player.LightAttack.performed -= ctx => HandleLightAttack();
+        _playerInputs.Player.HeavyAttack.performed -= ctx => HandleHeavyAttack();
     }
 
     void HandleMoveInput(Vector2 input)
@@ -65,5 +68,9 @@ public class PlayerInputHandler : MonoBehaviour
     void HandleLightAttack()
     {
         OnLightAttack?.Invoke();
+    }
+    void HandleHeavyAttack()
+    {
+        OnHeavyAttack?.Invoke();
     }
 }

@@ -63,10 +63,11 @@ public class PlayerAnimController : MonoBehaviour
     {
         isBusy = false;
     }
-    public void LightAttack(string _animName)
+
+    public void LightAttack(int _comboIndex)
     {
         isBusy = true;
-        playerAnimator.Play(_animName);
+        playerAnimator.SetInteger("ComboIndex", _comboIndex);
     }
     public void ResetAttack() //TODO
     {
