@@ -20,7 +20,7 @@ public class PlayerInputHandler : MonoBehaviour
         _playerInputs.Player.Move.performed += ctx => HandleMoveInput(ctx.ReadValue<Vector2>());
         _playerInputs.Player.Move.canceled += ctx => HandleMoveCancel();
         _playerInputs.Player.Sprint.performed += ctx => HandleSprintInput();
-        _playerInputs.Player.DrawWeapon.performed += ctx => HandleDrawWeaponInput();
+        _playerInputs.Player.ToggleWeaponPressed.performed += ctx => HandleDrawWeaponInput();
         _playerInputs.Player.LightAttack.performed += ctx => HandleLightAttack();
         _playerInputs.Player.HeavyAttack.performed += ctx => HandleHeavyAttack();
     }
@@ -32,7 +32,7 @@ public class PlayerInputHandler : MonoBehaviour
         _playerInputs.Player.Move.performed -= ctx => HandleMoveInput(ctx.ReadValue<Vector2>());
         _playerInputs.Player.Move.canceled -= ctx => HandleMoveCancel();
         _playerInputs.Player.Sprint.performed -= ctx => HandleSprintInput();
-        _playerInputs.Player.DrawWeapon.performed -= ctx => HandleDrawWeaponInput();
+        _playerInputs.Player.ToggleWeaponPressed.performed -= ctx => HandleDrawWeaponInput();
         _playerInputs.Player.LightAttack.performed -= ctx => HandleLightAttack();
         _playerInputs.Player.HeavyAttack.performed -= ctx => HandleHeavyAttack();
     }

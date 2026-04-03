@@ -31,19 +31,18 @@ public class MovementSystem : MonoBehaviour
         forward.Normalize();
         right.Normalize();
 
-        Vector3 moveDir = forward * _currentInput.y + right * _currentInput.x;
+        Vector3 moveDir = forward *_currentInput.y + right * _currentInput.x;
 
         if (moveDir.magnitude > 0.1f)
         {
-            // Rotate player toward movement direction
-            Quaternion targetRot = Quaternion.LookRotation(moveDir);
+            Quaternion targetRot = Quaternion.LookRotation(forward);
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
                 targetRot,
                 _locomotion.GetRotationSpeed() * Time.deltaTime
             );
         }
-        rb.linearVelocity = new Vector3(moveDir.x, rb.linearVelocity.y, moveDir.y) * speed; //TODO: Player is not moving forward or backward.
+        rb.linearVelocity = new Vector3(moveDir.x, rb.linearVelocity.y, moveDir.z) * speed;
     }
 
 }

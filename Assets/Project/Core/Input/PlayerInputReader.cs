@@ -24,7 +24,7 @@ public class PlayerInputReader : MonoBehaviour
         _inputs.Player.Sprint.performed += OnSprint;
         _inputs.Player.LightAttack.performed += OnLightAttack;
         _inputs.Player.HeavyAttack.performed += OnHeavyAttack;
-        _inputs.Player.DrawWeapon.performed += OnDrawWeapon;
+        _inputs.Player.ToggleWeaponPressed.performed += OnDrawWeapon;
     }
 
     private void OnDisable()
@@ -34,7 +34,7 @@ public class PlayerInputReader : MonoBehaviour
         _inputs.Player.Sprint.performed -= OnSprint;
         _inputs.Player.LightAttack.performed -= OnLightAttack;
         _inputs.Player.HeavyAttack.performed -= OnHeavyAttack;
-        _inputs.Player.DrawWeapon.performed -= OnDrawWeapon;
+        _inputs.Player.ToggleWeaponPressed.performed -= OnDrawWeapon;
 
         _inputs.Disable();
     }
@@ -71,7 +71,7 @@ public class PlayerInputReader : MonoBehaviour
 
     private void OnDrawWeapon(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
     {
-        _currentIntent.DrawWeaponPressed = true;
+        _currentIntent.ToggleWeaponPressed = true;
         RaiseIntent();
     }
 
@@ -83,7 +83,7 @@ public class PlayerInputReader : MonoBehaviour
         _currentIntent.SprintPressed = false;
         _currentIntent.LightAttackPressed = false;
         _currentIntent.HeavyAttackPressed = false;
-        _currentIntent.DrawWeaponPressed = false;
+        _currentIntent.ToggleWeaponPressed = false;
     }
 }
 

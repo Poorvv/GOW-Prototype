@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ea833e79645ddc499b971ac585dd4f0, type: 3}
   m_Name: LocomotionConfigData
   m_EditorClassIdentifier: Assembly-CSharp::LocomotionConfigData
-  WalkSpeed: 5
+  WalkSpeed: 3
   SprintSpeed: 10
-  RotationSpeed: 10
+  RotationSpeed: 15

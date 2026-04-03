@@ -765,6 +765,7 @@ GameObject:
   - component: {fileID: 809279980}
   - component: {fileID: 809279979}
   - component: {fileID: 809279981}
+  - component: {fileID: 809279982}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -984,6 +985,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locomotionConfig: {fileID: 11400000, guid: c68276e51568f1e4bb53455ff20adee7, type: 2}
+  _animPlayer: {fileID: 809279982}
   _inputreader: {fileID: 809279980}
   _movement: {fileID: 809279981}
 --- !u!114 &809279980
@@ -1012,6 +1014,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MovementSystem
   cameraTransform: {fileID: 1441962455}
   rb: {fileID: 809279969}
+--- !u!114 &809279982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809279967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8213464cf63684344b3cac853c74e257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationPlayer
+  animator: {fileID: 809279974}
+  blendSpeed: 0.3
 --- !u!1 &824290580
 GameObject:
   m_ObjectHideFlags: 0

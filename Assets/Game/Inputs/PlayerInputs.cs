@@ -183,7 +183,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""DrawWeapon"",
+                    ""name"": ""ToggleWeaponPressed"",
                     ""type"": ""Button"",
                     ""id"": ""3abb08e2-58a4-41f9-a987-bdf74f00fe0a"",
                     ""expectedControlType"": """",
@@ -594,7 +594,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""DrawWeapon"",
+                    ""action"": ""ToggleWeaponPressed"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1203,7 +1203,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Doge = m_Player.FindAction("Doge", throwIfNotFound: true);
-        m_Player_DrawWeapon = m_Player.FindAction("DrawWeapon", throwIfNotFound: true);
+        m_Player_ToggleWeaponPressed = m_Player.FindAction("ToggleWeaponPressed", throwIfNotFound: true);
         m_Player_HeavyAttack = m_Player.FindAction("HeavyAttack", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1308,7 +1308,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Next;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Doge;
-    private readonly InputAction m_Player_DrawWeapon;
+    private readonly InputAction m_Player_ToggleWeaponPressed;
     private readonly InputAction m_Player_HeavyAttack;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
@@ -1362,9 +1362,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Doge => m_Wrapper.m_Player_Doge;
         /// <summary>
-        /// Provides access to the underlying input action "Player/DrawWeapon".
+        /// Provides access to the underlying input action "Player/ToggleWeaponPressed".
         /// </summary>
-        public InputAction @DrawWeapon => m_Wrapper.m_Player_DrawWeapon;
+        public InputAction @ToggleWeaponPressed => m_Wrapper.m_Player_ToggleWeaponPressed;
         /// <summary>
         /// Provides access to the underlying input action "Player/HeavyAttack".
         /// </summary>
@@ -1425,9 +1425,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Doge.started += instance.OnDoge;
             @Doge.performed += instance.OnDoge;
             @Doge.canceled += instance.OnDoge;
-            @DrawWeapon.started += instance.OnDrawWeapon;
-            @DrawWeapon.performed += instance.OnDrawWeapon;
-            @DrawWeapon.canceled += instance.OnDrawWeapon;
+            @ToggleWeaponPressed.started += instance.OnToggleWeaponPressed;
+            @ToggleWeaponPressed.performed += instance.OnToggleWeaponPressed;
+            @ToggleWeaponPressed.canceled += instance.OnToggleWeaponPressed;
             @HeavyAttack.started += instance.OnHeavyAttack;
             @HeavyAttack.performed += instance.OnHeavyAttack;
             @HeavyAttack.canceled += instance.OnHeavyAttack;
@@ -1472,9 +1472,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Doge.started -= instance.OnDoge;
             @Doge.performed -= instance.OnDoge;
             @Doge.canceled -= instance.OnDoge;
-            @DrawWeapon.started -= instance.OnDrawWeapon;
-            @DrawWeapon.performed -= instance.OnDrawWeapon;
-            @DrawWeapon.canceled -= instance.OnDrawWeapon;
+            @ToggleWeaponPressed.started -= instance.OnToggleWeaponPressed;
+            @ToggleWeaponPressed.performed -= instance.OnToggleWeaponPressed;
+            @ToggleWeaponPressed.canceled -= instance.OnToggleWeaponPressed;
             @HeavyAttack.started -= instance.OnHeavyAttack;
             @HeavyAttack.performed -= instance.OnHeavyAttack;
             @HeavyAttack.canceled -= instance.OnHeavyAttack;
@@ -1849,12 +1849,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDoge(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "DrawWeapon" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "ToggleWeaponPressed" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnDrawWeapon(InputAction.CallbackContext context);
+        void OnToggleWeaponPressed(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "HeavyAttack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
