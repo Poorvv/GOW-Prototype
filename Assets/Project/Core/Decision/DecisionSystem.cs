@@ -7,15 +7,17 @@ public class DecisionSystem
     private StatusController _status;
     private StateTransitionSystem _transition;
     private DrawWeaponAction _drawWeaponAction;
+    private SheathWeaponAction _sheathWeaponAction;
     public DecisionSystem(LocomotionStateMachine locomotion,CombatStateMachine combat,
         StatusController status,
-        StateTransitionSystem transition, DrawWeaponAction drawWeaponAction)
+        StateTransitionSystem transition, DrawWeaponAction drawWeaponAction, SheathWeaponAction sheathWeaponAction)
     {
         this._locomotion = locomotion;
         this._combat = combat;
         this._status = status;
         this._transition = transition;
         this._drawWeaponAction = drawWeaponAction;
+        this._sheathWeaponAction = sheathWeaponAction;
     }
     public void TrySprint()
     {
@@ -38,6 +40,7 @@ public class DecisionSystem
         if (_combat.CurrentState != CombatState.Armed) return;
         if (_status.Has(StatusType.Stunned)) return;
         _transition.EnterSheathWeapon();
+        _sheathWeaponAction.StartSheathWeapon();
         Debug.Log("Sheathing weapon");
     }
     public void Evaluate(InputIntent inputIntent)
