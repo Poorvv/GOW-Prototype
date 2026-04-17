@@ -1,3 +1,5 @@
+using Unity.VisualScripting;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class PlayerGameplayController : MonoBehaviour
@@ -16,8 +18,10 @@ public class PlayerGameplayController : MonoBehaviour
 
 
     // Actions
+    private PlayerActionContainer _playerActionContainer;
     private DrawWeaponAction _drawWeaponAction;
     private SheathWeaponAction _sheathWeaponAction;
+    private LightAttackAction _lightAttackAction;
 
     private void OnEnable()
     {
@@ -29,14 +33,19 @@ public class PlayerGameplayController : MonoBehaviour
     private void Awake()
     {
         _locomotion = new LocomotionStateMachine(locomotionConfig);
-        _drawWeaponAction = new DrawWeaponAction(_animPlayer);
-        _sheathWeaponAction = new SheathWeaponAction(_animPlayer);
         _status = new StatusController();
         _combat = new CombatStateMachine();
         _transition = new StateTransitionSystem(_locomotion, _combat);
-        _decision = new DecisionSystem(_locomotion, _combat, _status, _transition, _drawWeaponAction, _sheathWeaponAction);
         _movement.Init(_locomotion);
         _animPlayer.Init(_locomotion);
+
+        //Actions
+        _drawWeaponAction = new DrawWeaponAction(_animPlayer);
+        _sheathWeaponAction = new SheathWeaponAction(_animPlayer);
+        _lightAttackAction = new LightAttackAction();
+        _playerActionContainer = new PlayerActionContainer(_drawWeaponAction, _sheathWeaponAction, _lightAttackAction);
+        _decision = new DecisionSystem(_locomotion, _combat, _status, _transition, _playerActionContainer);
+        
     }
 
     private void OnWeaponEquipped()

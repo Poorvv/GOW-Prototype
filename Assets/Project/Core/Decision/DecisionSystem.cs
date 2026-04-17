@@ -6,18 +6,19 @@ public class DecisionSystem
     private CombatStateMachine _combat;
     private StatusController _status;
     private StateTransitionSystem _transition;
+    private PlayerActionContainer _playerActionContainer;
     private DrawWeaponAction _drawWeaponAction;
     private SheathWeaponAction _sheathWeaponAction;
     public DecisionSystem(LocomotionStateMachine locomotion,CombatStateMachine combat,
         StatusController status,
-        StateTransitionSystem transition, DrawWeaponAction drawWeaponAction, SheathWeaponAction sheathWeaponAction)
+        StateTransitionSystem transition, PlayerActionContainer playerActionContainer)
     {
         this._locomotion = locomotion;
         this._combat = combat;
         this._status = status;
         this._transition = transition;
-        this._drawWeaponAction = drawWeaponAction;
-        this._sheathWeaponAction = sheathWeaponAction;
+
+        this._playerActionContainer = playerActionContainer;
     }
     public void TrySprint()
     {
@@ -32,7 +33,7 @@ public class DecisionSystem
         if (_combat.CurrentState != CombatState.Unarmed) return;
         if (_status.Has(StatusType.Stunned)) return;
         _transition.EnterDrawWeapon();
-        _drawWeaponAction.StartDrawWeapon();
+        _playerActionContainer.DrawWeaponAction.StartDrawWeapon();
         Debug.Log("Drawing weapon");
     }
     private void TrySheathWeapon()
@@ -40,8 +41,15 @@ public class DecisionSystem
         if (_combat.CurrentState != CombatState.Armed) return;
         if (_status.Has(StatusType.Stunned)) return;
         _transition.EnterSheathWeapon();
-        _sheathWeaponAction.StartSheathWeapon();
+        _playerActionContainer.SheathWeaponAction.StartSheathWeapon();
         Debug.Log("Sheathing weapon");
+    }
+    private void TryLightAttack()
+    {
+        if (_combat.CurrentState != CombatState.Attacking) return;
+        if (_status.Has(StatusType.Stunned)) return;
+        //_transition.EnterLightAttack();
+        Debug.Log("Performing light attack");
     }
     public void Evaluate(InputIntent inputIntent)
     {
@@ -59,6 +67,10 @@ public class DecisionSystem
         if(inputIntent.ToggleWeaponPressed)
         {
             HandleWeaponToggle();
+        }
+        if(inputIntent.LightAttackPressed)
+        {
+            TryLightAttack();
         }
     }
     private void HandleWeaponToggle()

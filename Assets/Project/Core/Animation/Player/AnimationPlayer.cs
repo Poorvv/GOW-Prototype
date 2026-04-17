@@ -38,11 +38,14 @@ public class AnimationPlayer : MonoBehaviour
     }
     public void PlayDrawWeapon()
     {
-        animator.SetTrigger("DrawWeapon");
+        
+        animator.CrossFade("DrawWeapon", 0.1f);
+        animator.SetBool("isArmed", true);
     }
     public void PlaySheathWeapon()
     {
-        animator.SetTrigger("SheathWeapon");
+        animator.CrossFade("SheathWeapon", 0.1f);
+        animator.SetBool("isArmed", false);
     } 
     
 }
