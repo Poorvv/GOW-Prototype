@@ -21,7 +21,7 @@ public class PlayerGameplayController : MonoBehaviour
     private PlayerActionContainer _playerActionContainer;
     private DrawWeaponAction _drawWeaponAction;
     private SheathWeaponAction _sheathWeaponAction;
-    private LightAttackAction _lightAttackAction;
+    private AttackAction _attackAction;
 
     private void OnEnable()
     {
@@ -42,8 +42,8 @@ public class PlayerGameplayController : MonoBehaviour
         //Actions
         _drawWeaponAction = new DrawWeaponAction(_animPlayer);
         _sheathWeaponAction = new SheathWeaponAction(_animPlayer);
-        _lightAttackAction = new LightAttackAction();
-        _playerActionContainer = new PlayerActionContainer(_drawWeaponAction, _sheathWeaponAction, _lightAttackAction);
+        //_attackAction = new AttackAction(); TODO: Implement AttackAction
+        _playerActionContainer = new PlayerActionContainer(_drawWeaponAction, _sheathWeaponAction, _attackAction);
         _decision = new DecisionSystem(_locomotion, _combat, _status, _transition, _playerActionContainer);
         
     }

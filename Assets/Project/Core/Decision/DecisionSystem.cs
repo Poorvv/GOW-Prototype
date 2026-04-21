@@ -7,8 +7,6 @@ public class DecisionSystem
     private StatusController _status;
     private StateTransitionSystem _transition;
     private PlayerActionContainer _playerActionContainer;
-    private DrawWeaponAction _drawWeaponAction;
-    private SheathWeaponAction _sheathWeaponAction;
     public DecisionSystem(LocomotionStateMachine locomotion,CombatStateMachine combat,
         StatusController status,
         StateTransitionSystem transition, PlayerActionContainer playerActionContainer)
@@ -46,10 +44,10 @@ public class DecisionSystem
     }
     private void TryLightAttack()
     {
-        if (_combat.CurrentState != CombatState.Attacking) return;
+        //if (_combat.CurrentState != CombatState.Attacking) return;
         if (_status.Has(StatusType.Stunned)) return;
         //_transition.EnterLightAttack();
-        Debug.Log("Performing light attack");
+        _playerActionContainer.AttackAction.HandleLightAttack();
     }
     public void Evaluate(InputIntent inputIntent)
     {
