@@ -46,6 +46,16 @@ public class AnimationPlayer : MonoBehaviour
     {
         animator.CrossFade("SheathWeapon", 0.1f);
         animator.SetBool("isArmed", false);
-    } 
-    
+    }
+    public void PlayLightAttack(int comboIndex)
+    {
+        //string attackAnim = $"Attack{comboIndex}";
+        animator.CrossFade($"Attack{comboIndex}", 0.1f);
+        //animator.SetInteger("ComboIndex", comboIndex);
+    }
+    public void CombatIdle() //TODO: update this.
+    {
+        animator.SetTrigger("AttackNull");
+    }
+
 }

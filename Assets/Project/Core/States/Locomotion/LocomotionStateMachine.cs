@@ -13,6 +13,10 @@ public class LocomotionStateMachine
     {
         CurrentState = newState;
     }
+    public void MovementRestriction()
+    {
+
+    }
     public float GetSpeed()
     {
         return CurrentState switch

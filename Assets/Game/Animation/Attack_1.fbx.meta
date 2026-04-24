@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 6dc6ce7da8cfa9242acba384536b7bd9
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects: {}
   materials:
@@ -35,7 +35,7 @@ ModelImporter:
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 49
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -55,24 +55,31 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
-        functionName: MovementRestriction
+      - time: 0.6730259
+        functionName: OpenComboWindow
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 9dc8c7efeb71de3458c33f15c2f1614f, type: 3}
+        objectReferenceParameter: {fileID: 11500000, guid: 5b32bd98678d29b4da12cf3ac79de499, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.96153843
-        functionName: MovementRestriction
+      - time: 0.966058
+        functionName: CloseComboWindow
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 9dc8c7efeb71de3458c33f15c2f1614f, type: 3}
+        objectReferenceParameter: {fileID: 11500000, guid: 5b32bd98678d29b4da12cf3ac79de499, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 1
-        functionName: OnAttackAnimationEnd
+        functionName: AttackEnd
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 276bf52822119584f9298e77af368169, type: 3}
+        objectReferenceParameter: {fileID: 11500000, guid: 5b32bd98678d29b4da12cf3ac79de499, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.615298
+        functionName: AttackHit
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 5b32bd98678d29b4da12cf3ac79de499, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -106,6 +113,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8

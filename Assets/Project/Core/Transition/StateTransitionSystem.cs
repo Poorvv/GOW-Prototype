@@ -33,4 +33,12 @@ public class StateTransitionSystem
     {
         _combat.SetState(CombatState.Unarmed);
     }
+    public void EnterAttack()
+    {
+        _combat.SetState(CombatState.Attacking);
+    }
+    public void ExitAttack()
+    {
+        _combat.SetState(CombatState.Armed);
+    }
 }

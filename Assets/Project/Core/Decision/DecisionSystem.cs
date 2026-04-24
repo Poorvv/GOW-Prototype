@@ -47,7 +47,10 @@ public class DecisionSystem
         //if (_combat.CurrentState != CombatState.Attacking) return;
         if (_status.Has(StatusType.Stunned)) return;
         //_transition.EnterLightAttack();
-        _playerActionContainer.AttackAction.HandleLightAttack();
+        if(_combat.CurrentState == CombatState.Armed)
+        {
+            _playerActionContainer.AttackAction.HandleLightAttack();
+        }
     }
     public void Evaluate(InputIntent inputIntent)
     {
