@@ -6,10 +6,11 @@ using UnityEngine;
 public class PlayerGameplayController : MonoBehaviour
 {
     [SerializeField] private LocomotionConfigData locomotionConfig;
-    [SerializeField] private AnimationPlayer _animPlayer;
-    [SerializeField] PlayerInputReader _inputreader;
-    [SerializeField] MovementSystem _movement;
-    [SerializeField] AnimationEventRelay _animationEventRelay;
+    [SerializeField] private AnimationPlayer animPlayer;
+    [SerializeField] private PlayerInputReader inputreader;
+    [SerializeField] private MovementSystem movement;
+    [SerializeField] private FeedbackSystem feedbackSystem;
+    [SerializeField] private AnimationEventRelay animationEventRelay;
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackRadius = 1.5f;
     [SerializeField] private LayerMask enemyLayer;
@@ -29,13 +30,13 @@ public class PlayerGameplayController : MonoBehaviour
 
     private void OnEnable()
     {
-        _inputreader.OnInputIntent += OnInputReceived;
-        _animationEventRelay.OnWeaponEquipped += OnWeaponEquipped;
-        _animationEventRelay.OnWeaponUnequipped += OnWeaponUnequipped;
-        _animationEventRelay.OnComboWindowOpen += _attackAction.OpenComboWindow;
-        _animationEventRelay.OnComboWindowClose += _attackAction.CloseComboWindow;
-        _animationEventRelay.OnAttackEnd += _attackAction.OnAttackEnd;
-        _animationEventRelay.OnHit += _attackAction.OnHit;
+        inputreader.OnInputIntent += OnInputReceived;
+        animationEventRelay.OnWeaponEquipped += OnWeaponEquipped;
+        animationEventRelay.OnWeaponUnequipped += OnWeaponUnequipped;
+        animationEventRelay.OnComboWindowOpen += _attackAction.OpenComboWindow;
+        animationEventRelay.OnComboWindowClose += _attackAction.CloseComboWindow;
+        animationEventRelay.OnAttackEnd += _attackAction.OnAttackEnd;
+        animationEventRelay.OnHit += _attackAction.OnHit;
     }
 
     private void Awake()
@@ -44,14 +45,14 @@ public class PlayerGameplayController : MonoBehaviour
         _status = new StatusController();
         _combat = new CombatStateMachine();
         _transition = new StateTransitionSystem(_locomotion, _combat);
-        _hitDetectionSystem = new HitDetectionSystem(attackPoint, attackRadius, enemyLayer);
-        _movement.Init(_locomotion);
-        _animPlayer.Init(_locomotion);
+        _hitDetectionSystem = new HitDetectionSystem(attackPoint, attackRadius, enemyLayer, feedbackSystem);
+        movement.Init(_locomotion);
+        animPlayer.Init(_locomotion);
 
         //Actions
-        _drawWeaponAction = new DrawWeaponAction(_animPlayer);
-        _sheathWeaponAction = new SheathWeaponAction(_animPlayer);
-        _attackAction = new AttackAction(_transition, _animPlayer, _hitDetectionSystem);
+        _drawWeaponAction = new DrawWeaponAction(animPlayer);
+        _sheathWeaponAction = new SheathWeaponAction(animPlayer);
+        _attackAction = new AttackAction(_transition, animPlayer, _hitDetectionSystem);
         _playerActionContainer = new PlayerActionContainer(_drawWeaponAction, _sheathWeaponAction, _attackAction);
         _decision = new DecisionSystem(_locomotion, _combat, _status, _transition, _playerActionContainer);
         
@@ -70,13 +71,13 @@ public class PlayerGameplayController : MonoBehaviour
     private void OnInputReceived(InputIntent intent)
     {
         _decision.Evaluate(intent);
-        _movement.SetInput(intent.Move);
-        _animPlayer.SetInput(intent.Move);
+        movement.SetInput(intent.Move);
+        animPlayer.SetInput(intent.Move);
     }
     private void OnDisable()
     {
-        _inputreader.OnInputIntent -= OnInputReceived;
-        _animationEventRelay.OnWeaponEquipped -= OnWeaponEquipped;
-        _animationEventRelay.OnWeaponUnequipped -= OnWeaponUnequipped;
+        inputreader.OnInputIntent -= OnInputReceived;
+        animationEventRelay.OnWeaponEquipped -= OnWeaponEquipped;
+        animationEventRelay.OnWeaponUnequipped -= OnWeaponUnequipped;
     }
 }

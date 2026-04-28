@@ -6,4 +6,5 @@ public struct AttackInfo
     public int Damage;
     public Vector3 HitPoint;
     public Vector3 HitDirection;
+    public Vector3 Normal;
 }

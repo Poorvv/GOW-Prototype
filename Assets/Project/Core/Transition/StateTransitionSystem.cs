@@ -41,4 +41,8 @@ public class StateTransitionSystem
     {
         _combat.SetState(CombatState.Armed);
     }
+    public bool IsAttacking()
+    {
+        return _combat.CurrentState == CombatState.Attacking;
+    }
 }

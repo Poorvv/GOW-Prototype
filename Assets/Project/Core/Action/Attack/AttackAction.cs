@@ -19,16 +19,19 @@ public class AttackAction
     public void HandleLightAttack()
     {
         //Debug.Log("Light Attack");
-        if (_canQueueNextAttack)
+        if(_stateTransitionSystem.IsAttacking())
         {
-            _queuedNextAttack = true;
-            return;
+            if (_canQueueNextAttack)
+            {
+                _queuedNextAttack = true;
+            }
+                return;
         }
         StartAttack();
     }
     private void StartAttack()
     {
-        //_stateTransitionSystem.EnterAttack();
+        _stateTransitionSystem.EnterAttack();
         _comboIndex = Mathf.Clamp(_comboIndex, 1, 3);
         _animPlayer.PlayLightAttack(_comboIndex);
         Debug.Log($"comboIndex: {_comboIndex}");
@@ -55,7 +58,7 @@ public class AttackAction
         {
             if(_comboIndex >= 3)
             {
-                _comboIndex = 0;
+                _comboIndex = 1;
             }
             else
             {

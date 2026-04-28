@@ -44,13 +44,10 @@ public class DecisionSystem
     }
     private void TryLightAttack()
     {
-        //if (_combat.CurrentState != CombatState.Attacking) return;
         if (_status.Has(StatusType.Stunned)) return;
-        //_transition.EnterLightAttack();
-        if(_combat.CurrentState == CombatState.Armed)
-        {
-            _playerActionContainer.AttackAction.HandleLightAttack();
-        }
+        if (_combat.CurrentState == CombatState.Unarmed) return;
+
+        _playerActionContainer.AttackAction.HandleLightAttack();  
     }
     public void Evaluate(InputIntent inputIntent)
     {
