@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
 public class HealthComponent: MonoBehaviour
 {
+    public Action<AttackInfo> OnDamageTaken;
+    public Action OnDeath;
     [SerializeField] private int maxHealth = 100;
-    [SerializeField] private EnemyReaction enemyReaction;
+    
     private int _currentHealth;
 
     private void Awake()
@@ -15,9 +18,10 @@ public class HealthComponent: MonoBehaviour
     {
         _currentHealth -= attackInfo.Damage;
         Debug.Log($"{gameObject.name} took {attackInfo.Damage} damage");
-        enemyReaction.PlayHitReaction(attackInfo.HitDirection);
+        OnDamageTaken?.Invoke(attackInfo);
         if (_currentHealth <= 0)
         {
+            OnDeath?.Invoke();
             Die();
         }
     }

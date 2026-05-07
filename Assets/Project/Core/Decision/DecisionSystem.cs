@@ -53,7 +53,7 @@ public class DecisionSystem
     {
         if (inputIntent.Move.sqrMagnitude > 0.01f)
         {
-            if (inputIntent.SprintPressed)
+            if (inputIntent.SprintPressed && inputIntent.Move.y == 1f)
                 _transition.SetLocomotion(LocomotionState.Sprint);
             else
                 _transition.SetLocomotion(LocomotionState.Walk);

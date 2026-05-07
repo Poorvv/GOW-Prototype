@@ -3,9 +3,21 @@ using UnityEngine;
 public class EnemyReaction : MonoBehaviour
 {
     [SerializeField] Animator animator;
-    public void PlayHitReaction(Vector3 direction)
+    [SerializeField] HealthComponent healthComponent;
+
+    private void OnEnable()
+    {
+        healthComponent.OnDamageTaken += HandleDamageTaken;
+    }
+
+    private void OnDisable()
+    {
+        healthComponent.OnDamageTaken -= HandleDamageTaken;
+    }
+
+    private void HandleDamageTaken(AttackInfo attackInfo)
     {
         animator.CrossFade("BodyHit", 0.1f);
-        Debug.Log("Ouch! Enemy hit from direction: " + direction);
+        Debug.Log("Ouch! Enemy hit from direction: " + attackInfo.HitDirection);
     }
 }
