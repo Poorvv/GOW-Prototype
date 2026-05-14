@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public class AttackAction
+public class PlayerAttackAction
 {
     private HitDetectionSystem _hitDetection;
     private StateTransitionSystem _stateTransitionSystem;
-    private AnimationPlayer _animPlayer;
+    private PlayerAnimationPlayer _animPlayer;
     private bool _canQueueNextAttack = false;
     private bool _queuedNextAttack = false;
     private int _comboIndex = 0;
 
-    public AttackAction(StateTransitionSystem stateTransitionSystem, AnimationPlayer animPlayer, HitDetectionSystem hitDetection)
+    public PlayerAttackAction(StateTransitionSystem stateTransitionSystem, PlayerAnimationPlayer animPlayer, HitDetectionSystem hitDetection)
     {
         _stateTransitionSystem = stateTransitionSystem;
         _animPlayer = animPlayer;
@@ -31,7 +31,7 @@ public class AttackAction
     }
     private void StartAttack()
     {
-        _stateTransitionSystem.EnterAttack();
+        _stateTransitionSystem.SetCombat(CombatState.Attacking);
         _comboIndex = Mathf.Clamp(_comboIndex, 1, 3);
         _animPlayer.PlayLightAttack(_comboIndex);
         Debug.Log($"comboIndex: {_comboIndex}");
@@ -71,7 +71,7 @@ public class AttackAction
         {
             _comboIndex = 0;
             _animPlayer.CombatIdle();//TODO: Update this
-            _stateTransitionSystem.ExitAttack();
+            _stateTransitionSystem.SetCombat(CombatState.Armed);
         }
     }
     public void OnHit()

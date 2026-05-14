@@ -17,29 +17,9 @@ public class StateTransitionSystem
     {
         _locomotion.SetState(state);
     }
-    public void EnterDrawWeapon()
+    public void SetCombat(CombatState state)
     {
-        _combat.SetState(CombatState.Drawing);
-    }
-    public void FinishDrawWeapon() 
-    {
-        _combat.SetState(CombatState.Armed);
-    }
-    public void EnterSheathWeapon()
-    {
-        _combat.SetState(CombatState.Sheathing);
-    }
-    public void FinishSheathWeapon() 
-    {
-        _combat.SetState(CombatState.Unarmed);
-    }
-    public void EnterAttack()
-    {
-        _combat.SetState(CombatState.Attacking);
-    }
-    public void ExitAttack()
-    {
-        _combat.SetState(CombatState.Armed);
+        _combat.SetState(state);
     }
     public bool IsAttacking()
     {

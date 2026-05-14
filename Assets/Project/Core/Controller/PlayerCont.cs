@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerGameplayController : MonoBehaviour
 {
     [SerializeField] private LocomotionConfigData locomotionConfig;
-    [SerializeField] private AnimationPlayer animPlayer;
+    [SerializeField] private PlayerAnimationPlayer animPlayer;
     [SerializeField] private PlayerInputReader inputreader;
     [SerializeField] private MovementSystem movement;
     [SerializeField] private FeedbackSystem feedbackSystem;
@@ -23,7 +23,7 @@ public class PlayerGameplayController : MonoBehaviour
     private PlayerActionContainer _playerActionContainer;
     private DrawWeaponAction _drawWeaponAction;
     private SheathWeaponAction _sheathWeaponAction;
-    private AttackAction _attackAction;
+    private PlayerAttackAction _attackAction;
 
     private void OnEnable()
     {
@@ -49,7 +49,7 @@ public class PlayerGameplayController : MonoBehaviour
         //Actions
         _drawWeaponAction = new DrawWeaponAction(animPlayer);
         _sheathWeaponAction = new SheathWeaponAction(animPlayer);
-        _attackAction = new AttackAction(_transition, animPlayer, _hitDetectionSystem);
+        _attackAction = new PlayerAttackAction(_transition, animPlayer, _hitDetectionSystem);
         _playerActionContainer = new PlayerActionContainer(_drawWeaponAction, _sheathWeaponAction, _attackAction);
         _decision = new DecisionSystem(_locomotion, _combat, _status, _transition, _playerActionContainer);
         
@@ -57,12 +57,12 @@ public class PlayerGameplayController : MonoBehaviour
 
     private void OnWeaponEquipped()
     {
-        _transition.FinishDrawWeapon();
+        _transition.SetCombat(CombatState.Armed);
         Debug.Log("Weapon Equipped");
     }
     private void OnWeaponUnequipped()
     {
-        _transition.FinishSheathWeapon();
+        _transition.SetCombat(CombatState.Unarmed);
         Debug.Log("Weapon Unequipped");
     }
     private void OnInputReceived(InputIntent intent)

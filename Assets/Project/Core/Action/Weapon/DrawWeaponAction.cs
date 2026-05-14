@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class DrawWeaponAction
 {
-    private AnimationPlayer _animPlayer;
-    public DrawWeaponAction(AnimationPlayer animPlayer)
+    private PlayerAnimationPlayer _animPlayer;
+    public DrawWeaponAction(PlayerAnimationPlayer animPlayer)
     {
         this._animPlayer = animPlayer;
     }

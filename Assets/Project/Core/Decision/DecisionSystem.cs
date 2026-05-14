@@ -30,7 +30,7 @@ public class DecisionSystem
     {
         if (_combat.CurrentState != CombatState.Unarmed) return;
         if (_status.Has(StatusType.Stunned)) return;
-        _transition.EnterDrawWeapon();
+        _transition.SetCombat(CombatState.Drawing);
         _playerActionContainer.DrawWeaponAction.StartDrawWeapon();
         Debug.Log("Drawing weapon");
     }
@@ -38,7 +38,7 @@ public class DecisionSystem
     {
         if (_combat.CurrentState != CombatState.Armed) return;
         if (_status.Has(StatusType.Stunned)) return;
-        _transition.EnterSheathWeapon();
+        _transition.SetCombat(CombatState.Sheathing);
         _playerActionContainer.SheathWeaponAction.StartSheathWeapon();
         Debug.Log("Sheathing weapon");
     }

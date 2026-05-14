@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class SheathWeaponAction
 {
-    private AnimationPlayer _animPlayer;
+    private PlayerAnimationPlayer _animPlayer;
 
-    public SheathWeaponAction(AnimationPlayer animPlayer)
+    public SheathWeaponAction(PlayerAnimationPlayer animPlayer)
     {
         this._animPlayer = animPlayer;
     }

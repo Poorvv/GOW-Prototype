@@ -6,7 +6,7 @@ public class EnemyAI : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] Transform player;
-    [SerializeField] AttackAction attackAction;
+    [SerializeField] PlayerAttackAction attackAction;
     [SerializeField] NavMeshAgent agent;
 
     [Header("Settings")]

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyReaction : MonoBehaviour
 {
-    [SerializeField] Animator animator;
+    [SerializeField] EnemyAnimationPlayer enemyAnimationPlayer;
     [SerializeField] HealthComponent healthComponent;
 
     private void OnEnable()
@@ -17,7 +17,7 @@ public class EnemyReaction : MonoBehaviour
 
     private void HandleDamageTaken(AttackInfo attackInfo)
     {
-        animator.CrossFade("BodyHit", 0.1f);
+        enemyAnimationPlayer.PlayHitAnim();
         Debug.Log("Ouch! Enemy hit from direction: " + attackInfo.HitDirection);
     }
 }

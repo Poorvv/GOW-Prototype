@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class AnimationPlayer : MonoBehaviour
+public class PlayerAnimationPlayer: MonoBehaviour
 {
-    [SerializeField] private Animator animator;
+    [SerializeField] Animator animator;
     [SerializeField] float blendSpeed = 0.3f;
 
     private float _currentBlendX;
