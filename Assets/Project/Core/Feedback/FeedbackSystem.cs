@@ -18,10 +18,6 @@ public class FeedbackSystem : MonoBehaviour
         {
             audioSource.PlayOneShot(hitSFX);
         }
-        else
-        {
-            Debug.Log("bla bla");
-        }
         
     }
 }

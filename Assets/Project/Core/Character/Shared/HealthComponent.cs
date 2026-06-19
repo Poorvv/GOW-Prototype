@@ -22,14 +22,14 @@ public class HealthComponent: MonoBehaviour
         if (_currentHealth <= 0)
         {
             OnDeath?.Invoke();
-            Die();
+            //Die();
         }
     }
 
-    private void Die()
+    /*private void Die()
     {
         // Handle death logic here
         Destroy(gameObject);
         Debug.Log($"{gameObject.name} has died.");
-    }
+    }*/
 }

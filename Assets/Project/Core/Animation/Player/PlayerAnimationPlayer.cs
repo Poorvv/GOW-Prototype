@@ -53,9 +53,17 @@ public class PlayerAnimationPlayer: MonoBehaviour
         animator.CrossFade($"Attack{comboIndex}", 0.1f);
         //animator.SetInteger("ComboIndex", comboIndex);
     }
-    public void CombatIdle() //TODO: update this.
+    public void PlayIdle()
     {
-        animator.SetTrigger("AttackNull");
+        animator.SetTrigger("Idle");
+    }
+    public void PlayHitAnim()
+    {
+        animator.CrossFade("BodyHit", 0.1f);
+    }
+    public void PlayDeathAnim()
+    {
+        animator.CrossFade("PlayerDeath", 0.1f);
     }
 
 }

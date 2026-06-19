@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fb8aba6fbe5147f43ba344f7a4fa058e
+guid: 4dbda1b18cb57214492a03647ae9c036
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Attack3
+      name: Attack1
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 35
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -47,7 +47,7 @@ ModelImporter:
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 1
       heightFromFeet: 0
@@ -55,31 +55,35 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
+      - time: 0.6730259
         functionName: OpenComboWindow
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 5b32bd98678d29b4da12cf3ac79de499, type: 3}
+        objectReferenceParameter: {fileID: 11500000, guid: 5b32bd98678d29b4da12cf3ac79de499,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.70528674
-        functionName: AttackHit
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 5b32bd98678d29b4da12cf3ac79de499, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.98269904
+      - time: 0.966058
         functionName: CloseComboWindow
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 5b32bd98678d29b4da12cf3ac79de499, type: 3}
+        objectReferenceParameter: {fileID: 11500000, guid: 5b32bd98678d29b4da12cf3ac79de499,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 1
         functionName: AttackEnd
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 5b32bd98678d29b4da12cf3ac79de499, type: 3}
+        objectReferenceParameter: {fileID: 11500000, guid: 5b32bd98678d29b4da12cf3ac79de499,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.615298
+        functionName: AttackHit
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 5b32bd98678d29b4da12cf3ac79de499,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -864,7 +868,8 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 2faa610713d3b3c439473daa55e8c60a, type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 2faa610713d3b3c439473daa55e8c60a,
+    type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1

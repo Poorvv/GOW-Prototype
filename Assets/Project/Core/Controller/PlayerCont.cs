@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class PlayerGameplayController : MonoBehaviour
 {
-    [SerializeField] private LocomotionConfigData locomotionConfig;
-    [SerializeField] private PlayerAnimationPlayer animPlayer;
-    [SerializeField] private PlayerInputReader inputreader;
-    [SerializeField] private MovementSystem movement;
-    [SerializeField] private FeedbackSystem feedbackSystem;
-    [SerializeField] private AnimationEventRelay animationEventRelay;
-    [SerializeField] private Transform attackPoint;
-    [SerializeField] private float attackRadius = 1.5f;
-    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] LocomotionConfigData locomotionConfig;
+    [SerializeField] PlayerAnimationPlayer animPlayer;
+    [SerializeField] PlayerInputReader inputreader;
+    [SerializeField] MovementSystem movement;
+    [SerializeField] FeedbackSystem feedbackSystem;
+    [SerializeField] AnimationEventRelay animationEventRelay;
+    [SerializeField] PlayerReaction playerReaction;
+    [SerializeField] Transform attackPoint;
+    [SerializeField] float attackRadius = 1.5f;
+    [SerializeField] LayerMask enemyLayer;
     //Systems
     private LocomotionStateMachine _locomotion;
     private CombatStateMachine _combat;
@@ -45,7 +46,7 @@ public class PlayerGameplayController : MonoBehaviour
         _hitDetectionSystem = new HitDetectionSystem(attackPoint, attackRadius, enemyLayer, feedbackSystem);
         movement.Init(_locomotion);
         animPlayer.Init(_locomotion);
-
+        playerReaction.Init(_status);
         //Actions
         _drawWeaponAction = new DrawWeaponAction(animPlayer);
         _sheathWeaponAction = new SheathWeaponAction(animPlayer);

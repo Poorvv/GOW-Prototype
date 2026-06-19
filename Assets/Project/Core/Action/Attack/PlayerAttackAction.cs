@@ -70,7 +70,7 @@ public class PlayerAttackAction
         else
         {
             _comboIndex = 0;
-            _animPlayer.CombatIdle();//TODO: Update this
+            _animPlayer.PlayIdle();
             _stateTransitionSystem.SetCombat(CombatState.Armed);
         }
     }
